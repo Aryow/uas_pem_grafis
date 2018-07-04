@@ -43,7 +43,7 @@ public class GLRenderer implements GLEventListener {
     }
     vector Sumbu_z = new vector(0f, 0f, -1f);//deklarasi awal vektor untuk maju & mundur
     vector Sumbu_x = new vector(1f, 0f, 0f);//deklarasi awal vektor untuk gerakan ke kanan & kiri
-    vector Sumbu_y = new vector(0f, 1f, 0f);//deklarasi awal vetor untuk gerakan naik & turun
+    vector Sumbu_y = new vector(0f, 1f, 0f);//deklarasi awal vetor untuk gerakan naik & turun a
     float Cx = 0, Cy = 2.5f, Cz = 0;
     float Lx = 0, Ly = 2.5f, Lz = -20f;
     float sudut_x = 0f;
