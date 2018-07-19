@@ -1,38 +1,118 @@
 package org.yourorghere;
 
-import com.sun.opengl.util.GLUT;
 import javax.media.opengl.GL;
 import javax.media.opengl.glu.GLU;
 import javax.media.opengl.glu.GLUquadric;
 
+
 public class Objek {
 
-    static void Badan(GL gl) {
-        {
+    static void kepala(GL gl) {
+        float BODY_RADIUS = 2f;
+        int SLICES = 100;
+        int STACKS = 100;
+        GLU glu = new GLU();
+        GLUquadric q = glu.gluNewQuadric();
+        glu.gluSphere(q, BODY_RADIUS, SLICES, STACKS);
+    }
+    
+    static void tangankanan(GL gl) {
+        gl.glBegin(GL.GL_POLYGON);//kiri            
+        gl.glColor3f(0.82f, 0.70f, 0.39f);
+        gl.glVertex3f(0, 0, 0);//1
+        gl.glVertex3f(0, 1, 0);//2
+        gl.glVertex3f(0, 1, 3);//3
+        gl.glVertex3f(0, 0, 3);//4
+        gl.glEnd();
 
-            float BODY_RADIUS = 0.5f * 2;
-            float BODY_LENGTH = 0.5f * 5;
-            int SLICES = 40;
-            int STACKS = 40;
-            GLU glu = new GLU();
-            GLUquadric q = glu.gluNewQuadric();
-            glu.gluCylinder(q, BODY_RADIUS, BODY_RADIUS, BODY_LENGTH, SLICES, STACKS);
-            glu.gluDisk(q, 0.0f, BODY_RADIUS, SLICES, STACKS); //lingkaran untuk tutup atas
-            gl.glTranslatef(0f, 0.0f, BODY_LENGTH);
-            glu.gluDisk(q, 0f, BODY_RADIUS, SLICES, STACKS); //lingkaran untuk tutup bawah
-        }
+        gl.glBegin(GL.GL_POLYGON);//atas
+        gl.glColor3f(0.82f, 0.70f, 0.39f);
+        gl.glVertex3f(0, 0, 0);//1
+        gl.glVertex3f(1, 0, 0);//5
+        gl.glVertex3f(1, 1, 0);//6
+        gl.glVertex3f(0, 1, 0);//2
+        gl.glEnd();
+
+        gl.glBegin(GL.GL_POLYGON);//belakang
+        gl.glColor3f(0.82f, 0.70f, 0.39f);
+        gl.glVertex3f(0, 0, 0);//1
+        gl.glVertex3f(0, 0, 3);//4
+        gl.glVertex3f(1, 0, 3);//8
+        gl.glVertex3f(1, 0, 0);//5
+        gl.glEnd();
+
+        gl.glBegin(GL.GL_POLYGON);//depan
+        gl.glColor3f(0.82f, 0.70f, 0.39f);
+        gl.glVertex3f(0, 1, 0);//2
+        gl.glVertex3f(1, 1, 0);//6
+        gl.glVertex3f(1, 1, 3);//7
+        gl.glVertex3f(0, 1, 3);//3
+        gl.glEnd();
+
+        gl.glBegin(GL.GL_POLYGON);//kanan
+        gl.glColor3f(0.82f, 0.70f, 0.39f);
+        gl.glVertex3f(1, 0, 0);//5
+        gl.glVertex3f(1, 1, 0);//6
+        gl.glVertex3f(1, 1, 3);//7
+        gl.glVertex3f(1, 0, 3);//8
+        gl.glEnd();
+
+        gl.glBegin(GL.GL_POLYGON);//bawah
+        gl.glColor3f(0.82f, 0.70f, 0.39f);
+        gl.glVertex3f(1, 1, 3);//7
+        gl.glVertex3f(1, 0, 3);//8
+        gl.glVertex3f(0, 0, 3);//4
+        gl.glVertex3f(0, 1, 3);//3
+        gl.glEnd();
     }
 
-    static void Kepala(GL gl) {
-        double clip_plane1[] = {0.0, 0.0, -10.0, 2};
-        gl.glClipPlane(GL.GL_CLIP_PLANE1, clip_plane1, 0);
-        gl.glEnable(GL.GL_CLIP_PLANE1);
-// drawing a sphere
-        GLU glu = new GLU();
-        GLUquadric qd = glu.gluNewQuadric();
-        glu.gluSphere(qd, 1.0f, 30, 30);
-        glu.gluDisk(qd, 1f, 0f, 20, 20);
-        glu.gluDeleteQuadric(qd);
-        gl.glDisable(GL.GL_CLIP_PLANE1);
+    static void tangankiri(GL gl) {
+        gl.glBegin(GL.GL_POLYGON);//kiri
+        gl.glColor3f(0.82f, 0.70f, 0.39f);
+        gl.glVertex3f(0, 0, 0);//1
+        gl.glVertex3f(0, 1, 0);//2
+        gl.glVertex3f(0, 1, 3);//3
+        gl.glVertex3f(0, 0, 3);//4
+        gl.glEnd();
+
+        gl.glBegin(GL.GL_POLYGON);//atas
+        gl.glColor3f(0.82f, 0.70f, 0.39f);
+        gl.glVertex3f(0, 0, 0);//1
+        gl.glVertex3f(1, 0, 0);//5
+        gl.glVertex3f(1, 1, 0);//6
+        gl.glVertex3f(0, 1, 0);//2
+        gl.glEnd();
+
+        gl.glBegin(GL.GL_POLYGON);//belakang
+        gl.glColor3f(0.82f, 0.70f, 0.39f);
+        gl.glVertex3f(0, 0, 0);//1
+        gl.glVertex3f(0, 0, 3);//4
+        gl.glVertex3f(1, 0, 3);//8
+        gl.glVertex3f(1, 0, 0);//5
+        gl.glEnd();
+
+        gl.glBegin(GL.GL_POLYGON);//depan
+        gl.glColor3f(0.82f, 0.70f, 0.39f);
+        gl.glVertex3f(0, 1, 0);//2
+        gl.glVertex3f(1, 1, 0);//6
+        gl.glVertex3f(1, 1, 3);//7
+        gl.glVertex3f(0, 1, 3);//3
+        gl.glEnd();
+
+        gl.glBegin(GL.GL_POLYGON);//kanan
+        gl.glColor3f(0.82f, 0.70f, 0.39f);
+        gl.glVertex3f(1, 0, 0);//5
+        gl.glVertex3f(1, 1, 0);//6
+        gl.glVertex3f(1, 1, 3);//7
+        gl.glVertex3f(1, 0, 3);//8
+        gl.glEnd();
+
+        gl.glBegin(GL.GL_POLYGON);//bawah
+        gl.glColor3f(0.82f, 0.70f, 0.39f);
+        gl.glVertex3f(1, 1, 3);//7
+        gl.glVertex3f(1, 0, 3);//8
+        gl.glVertex3f(0, 0, 3);//4
+        gl.glVertex3f(0, 1, 3);//3
+        gl.glEnd();
     }
 }
