@@ -5,6 +5,10 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
 
+/**
+ *
+ * @author BOT
+ */
 public class GLRenderer implements GLEventListener {
 
     class vector {
@@ -29,36 +33,40 @@ public class GLRenderer implements GLEventListener {
             float cross_product_x = (y * temp.z) - (temp.z * z);
             float cross_product_y = -((x * temp.z) - (z * temp.x));
             float cross_product_z = (x * temp.y) - (y * temp.x);
-            float last_factor_rodrigues = (float) (1 - Math.cos(Math.toRadians(angle % 360)));
-            x = (float) ((x * Math.cos(Math.toRadians(angle % 360)))
-                    + (cross_product_x * Math.sin(Math.toRadians(angle % 360)))
+            float last_factor_rodrigues = (float) (1 - Math.cos(Math.toRadians(angle % 90)));
+            x = (float) ((x * Math.cos(Math.toRadians(angle % 90)))
+                    + (cross_product_x * Math.sin(Math.toRadians(angle % 90)))
                     + (dot_product * last_factor_rodrigues * x));
-            y = (float) ((this.y * Math.cos(Math.toRadians(angle % 360)))
-                    + (cross_product_y * Math.sin(Math.toRadians(angle % 360)))
+            y = (float) ((this.y * Math.cos(Math.toRadians(angle % 90)))
+                    + (cross_product_y * Math.sin(Math.toRadians(angle % 90)))
                     + (dot_product * last_factor_rodrigues * y));
-            z = (float) ((z * Math.cos(Math.toRadians(angle % 360)))
-                    + (cross_product_z * Math.sin(Math.toRadians(angle % 360)))
+            z = (float) ((z * Math.cos(Math.toRadians(angle % 90)))
+                    + (cross_product_z * Math.sin(Math.toRadians(angle % 90)))
                     + (dot_product * last_factor_rodrigues * z));
         }
     }
-    vector Sumbu_z = new vector(0f, 0f, -1f);//deklarasi awal vektor untuk maju & mundur
-    vector Sumbu_x = new vector(1f, 0f, 0f);//deklarasi awal vektor untuk gerakan ke kanan & kiri
-    vector Sumbu_y = new vector(0f, 1f, 0f);//deklarasi awal vetor untuk gerakan naik & turun a
+    vector depanBelakang = new vector(0f, 0f, -1f);
+    vector samping = new vector(1f, 0f, 0f);
+    vector vertikal = new vector(0f, 1f, 0f);
     float Cx = 0, Cy = 2.5f, Cz = 0;
     float Lx = 0, Ly = 2.5f, Lz = -20f;
-    float sudut_x = 0f;
-    float sudut_x2 = 0f;
-    float sudut_z = 0f;
-    float sudut_z2 = 0f;
-    float sudut_y = 0f;
-    float sudut_y2 = 0f;
-    boolean ori = true;
+    float angle_depanBelakang = 0f;
+    float angle_depanBelakang2 = 0f;
+    float angle_samping = 0f;
+    float angle_samping2 = 0f;
+    float angle_vertikal = 0f;
+    float angle_vertikal2 = 0f;
+    float danboAngle = 90f;
+    float kakikananAngle = 0f;
+    float kakikiriAngle = 0f;
+    float tangankananAngle = 1;
+    float tangankiriAngle = 1;
+    double direction1 = 5;
+    double direction2 = 5;
+    double direction3 = 5;
+    double direction4 = 5;
+    boolean ori = true, kakiKanan, kakiKiri = false;
 
-    /*
-ini adalah metod untuk melakukan pergerakan.
-magnitude adalah besarnya gerakan sedangkan direction digunakan untuk menentukan arah.
-gunakan -1 untuk arah berlawanan dengan vektor awal
-     */
     private void vectorMovement(vector toMove, float magnitude, float direction) {
         float speedX = toMove.x * magnitude * direction;
         float speedY = toMove.y * magnitude * direction;
@@ -72,10 +80,10 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
     }
 
     private void cameraRotation(vector reference, double angle) {
-        float M = (float) (Math.sqrt(Math.pow(reference.x, 2) + Math.pow(reference.y, 2) + Math.pow(reference.z, 2)));//magnitud
-        float Up_x1 = reference.x / M; //melakukan
-        float Up_y1 = reference.y / M; //normalisasi
-        float Up_z1 = reference.z / M; //vektor patokan
+        float M = (float) (Math.sqrt(Math.pow(reference.x, 2) + Math.pow(reference.y, 2) + Math.pow(reference.z, 2)));
+        float Up_x1 = reference.x / M;
+        float Up_y1 = reference.y / M;
+        float Up_z1 = reference.z / M;
         float VLx = Lx - Cx;
         float VLy = Ly - Cy;
         float VLz = Lz - Cz;
@@ -83,15 +91,15 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
         float cross_product_x = (Up_y1 * VLz) - (VLy * Up_z1);
         float cross_product_y = -((Up_x1 * VLz) - (Up_z1 * VLx));
         float cross_product_z = (Up_x1 * VLy) - (Up_y1 * VLx);
-        float last_factor_rodriques = (float) (1 - Math.cos(Math.toRadians(angle)));
-        float Lx1 = (float) ((VLx * Math.cos(Math.toRadians(angle)))
-                + (cross_product_x * Math.sin(Math.toRadians(angle)))
+        float last_factor_rodriques = (float) (1 - Math.cos(Math.toRadians(angle % 90)));
+        float Lx1 = (float) ((VLx * Math.cos(Math.toRadians(angle % 90)))
+                + (cross_product_x * Math.sin(Math.toRadians(angle % 90)))
                 + (dot_product * last_factor_rodriques * VLx));
-        float Ly1 = (float) ((VLy * Math.cos(Math.toRadians(angle)))
-                + (cross_product_y * Math.sin(Math.toRadians(angle)))
+        float Ly1 = (float) ((VLy * Math.cos(Math.toRadians(angle % 90)))
+                + (cross_product_y * Math.sin(Math.toRadians(angle % 90)))
                 + (dot_product * last_factor_rodriques * VLy));
-        float Lz1 = (float) ((VLz * Math.cos(Math.toRadians(angle)))
-                + (cross_product_z * Math.sin(Math.toRadians(angle)))
+        float Lz1 = (float) ((VLz * Math.cos(Math.toRadians(angle % 90)))
+                + (cross_product_z * Math.sin(Math.toRadians(angle % 90)))
                 + (dot_product * last_factor_rodriques * VLz));
         Lx = Lx1 + Cx;
         Ly = Ly1 + Cy;
@@ -99,28 +107,30 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
     }
 
     public void init(GLAutoDrawable drawable) {
+
         GL gl = drawable.getGL();
         System.err.println("INIT GL IS: " + gl.getClass().getName());
-// Enable VSync
+
         gl.setSwapInterval(1);
-        float ambient[] = {2.0f, 5.0f, 5.0f, 1.0f};
+        float ambient[] = {0f, 26, 81f, 55f};
         float diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
-        float position[] = {1.0f, 1.0f, 1.0f, 1.0f};
+        float position[] = {1.0f, 1.0f, 1.0f, 0.0f};
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, ambient, 0);
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, diffuse, 0);
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, position, 0);
         gl.glEnable(GL.GL_LIGHT0);
         gl.glEnable(GL.GL_LIGHTING);
         gl.glEnable(GL.GL_DEPTH_TEST);
-        gl.glClearColor(0f, 0f, 0.0f, 0.0f);
+        gl.glClearColor(0f, 0f, 0.0f, 1.0f);
         gl.glShadeModel(GL.GL_SMOOTH);
-//gl.glShadeModel(GL.GL_SMOOTH); // try setting this to GL_FLAT and see what happens.
+
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
         GL gl = drawable.getGL();
         GLU glu = new GLU();
-        if (height <= 0) { // avoid a divide by zero error!
+
+        if (height <= 0) {
             height = 1;
         }
         final float h = (float) width / (float) height;
@@ -131,66 +141,51 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
-    float angle1 = 1;
-    float angle2 = 1;
-    float direction = 20f;
 
     public void display(GLAutoDrawable drawable) {
         GL gl = drawable.getGL();
         GLU glu = new GLU();
-// Clear the drawing area
+
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
-// Reset the current matrix to the "identity"
+
         gl.glLoadIdentity();
-// Move the "drawing cursor" around
+
         glu.gluLookAt(Cx, Cy, Cz,
                 Lx, Ly, Lz,
-                Sumbu_y.x, Sumbu_y.y, Sumbu_y.z);
-        Objek.Badan(gl);
+                vertikal.x, vertikal.y, vertikal.z);
+
+        gl.glRotatef(danboAngle, 1.0f, 0.0f, 0.0f);
+        gl.glTranslatef(-2.5f, -16.0f, -7.0f);
+        gl.glColor3f(1, 0, 0);
+        Objek.kepala(gl);
         gl.glPushMatrix();
-        gl.glTranslatef(0f, 2f, -15f);
-        Objek.Kepala(gl);
-        gl.glPopMatrix();
         gl.glPushMatrix();
-        gl.glTranslatef(0f, 2f, -15f);
-        gl.glPopMatrix();
         gl.glPushMatrix();
-        gl.glTranslatef(0f, 2f, -14f);
-        gl.glRotatef(angle1, 1.0f, 0f, 0f);
-        //Objek.HalfSphere(gl, Cx);
-        gl.glPopMatrix();
         gl.glPushMatrix();
-        gl.glTranslatef(0f, 2f, -14f);
-        gl.glRotatef(angle2, 1.0f, 0f, 0f);
-        //Objek.ArmsLegsEars(gl, Cx, Cx);
+        gl.glTranslatef(0f, 0.2f, -0.2f);
+        Objek.badan(gl);
         gl.glPopMatrix();
+        gl.glTranslatef(-3f, 0f, -0.2f);
+        gl.glRotatef(tangankananAngle, 1.0f, 0.0f, 0.0f);
+        Objek.tangankanan(gl);
+        gl.glPopMatrix();
+        gl.glTranslatef(2f, 0f, 0.2f);
+        gl.glRotatef(tangankiriAngle, 1.0f, 0.0f, 0.0f);
+        Objek.tangankiri(gl);
+        gl.glPopMatrix();
+        gl.glTranslatef(-1.5f, 0.5f, 3.5f);
+        gl.glRotatef(kakikananAngle, 1.0f, 0.0f, 0.0f);
+        Objek.kakikanan(gl);
+        gl.glPopMatrix();
+        gl.glTranslatef(0.7f, 0.2f, 3.5f);
+        gl.glRotatef(kakikiriAngle, 1.0f, 0.0f, 0.0f);
+        gl.glColor3f(1, 0, 0);
+        Objek.kakikiri(gl);
+        gl.glPopMatrix();
+
+        
+       
         gl.glFlush();
-        
-//        angle1 += direction;
-//        if(angle1 > 50){
-//            direction = -direction;
-//        }else if(angle1 < -50){
-//            direction = -direction;
-//        }
-//        
-//        angle1 += 0.2f;
-
-        angle1 += direction;
-        if (angle1 > 90) {
-            direction = -direction;
-        } else if (angle1 < -90) {
-            direction = -direction;
-        }
-
-        angle2 -= direction;
-        if (angle2 < -35) {
-            direction = -direction;
-        } else if (angle2 > 35) {
-            direction = -direction;
-        }
-        
-//        angle1 += 20f;
-//        angle2 += 90f;
 
     }
 
@@ -198,52 +193,59 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
     }
 
     void Key_Pressed(int keyCode) {
-//huruf A
-        if (keyCode == 68) {
-            vectorMovement(Sumbu_x, 2f, 1f);
-        } //huruf D
-        else if (keyCode == 65) {
-            vectorMovement(Sumbu_x, 2f, -1f);
-        } //huruf W
-        else if (keyCode == 87) {
-            vectorMovement(Sumbu_y, 2f, 1f);
-        } //huruf S
-        else if (keyCode == 83) {
-            vectorMovement(Sumbu_y, 2f, -1f);
-        } //panah atas
-        else if (keyCode == 38) {
-            vectorMovement(Sumbu_z, 2f, 1f);
-        } //panah bawah
-        else if (keyCode == 40) {
-            vectorMovement(Sumbu_z, 2f, -1f);
-        } //huruf J
-        else if (keyCode == 74) {
-            sudut_z += 15f; //sudut terhadap z
-            Sumbu_z.vectorRotation(Sumbu_y, sudut_z - sudut_z2); //memutar vector sumbu z terhadap x (target, patokan)
-            Sumbu_x.vectorRotation(Sumbu_y, sudut_z - sudut_z2);
-            cameraRotation(Sumbu_y, sudut_z - sudut_z2); //look at
-            sudut_z2 = sudut_z; //nyimpan sudut akhir
-        } //huruf L
-        else if (keyCode == 76) {
-            sudut_z -= 15f; //sudut terhadap z
-            Sumbu_z.vectorRotation(Sumbu_y, sudut_z - sudut_z2); //memutar vector sumbu z terhadap x (target, patokan)
-            Sumbu_x.vectorRotation(Sumbu_y, sudut_z - sudut_z2);
-            cameraRotation(Sumbu_y, sudut_z - sudut_z2); //look at
-            sudut_z2 = sudut_z; //nyimpan sudut akhir
-        } //huruf I
-        else if (keyCode == 73) {
-            sudut_z -= 15f; //sudut terhadap z
-            Sumbu_z.vectorRotation(Sumbu_x, sudut_z - sudut_z2); //memutar vector sumbu z terhadap x (target, patokan)
-            Sumbu_x.vectorRotation(Sumbu_x, sudut_z - sudut_z2);
-            cameraRotation(Sumbu_x, sudut_z - sudut_z2); //look at
-            sudut_z2 = sudut_z; //nyimpan sudut akhir
-        } //huruf K
-        else if (keyCode == 75) {
-            sudut_z += 15f; //sudut terhadap z
-            Sumbu_z.vectorRotation(Sumbu_x, sudut_z - sudut_z2); //memutar vector sumbu z terhadap x (target, patokan)
-            Sumbu_x.vectorRotation(Sumbu_x, sudut_z - sudut_z2);
-            cameraRotation(Sumbu_x, sudut_z - sudut_z2); //look at
-            sudut_z2 = sudut_z; //nyimpan sudut akhir
+        
+        switch (keyCode) {
+        
+        //huruf D
+            case 68:
+                vectorMovement(samping, 2f, -1f);
+                break;
+        //huruf A
+            case 65:
+                vectorMovement(samping, 2f, 1f);
+                break;
+        //huruf S
+            case 83:
+                vectorMovement(vertikal, 2f, 1f);
+                break;
+        //huruf W
+            case 87:
+                vectorMovement(vertikal, 2f, -1f);
+                break;
+        
+        //Huruf J
+            case 74:
+                angle_vertikal += 7f;
+                samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
+                depanBelakang.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
+                cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
+                angle_vertikal2 = angle_vertikal;
+                break;
+        //huruf L
+            case 76:
+                angle_vertikal -= 7f;
+                samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
+                depanBelakang.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
+                cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
+                angle_vertikal2 = angle_vertikal;
+                break;
+        //huruf K
+            case 75:
+                angle_samping -= 7f;
+                depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
+                cameraRotation(samping, angle_samping - angle_samping2);
+                angle_samping2 = angle_samping;
+                break;
+        //Huruf I
+            case 73:
+                angle_samping += 7f;
+                depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
+                cameraRotation(samping, angle_samping - angle_samping2);
+                angle_samping2 = angle_samping;
+                break;
+        
+            default:
+                break;
         }
     }
 }
