@@ -179,7 +179,6 @@ public class GLRenderer implements GLEventListener {
         gl.glPopMatrix();
         gl.glTranslatef(0.7f, 0.2f, 3.5f);
         gl.glRotatef(kakikiriAngle, 1.0f, 0.0f, 0.0f);
-        gl.glColor3f(1, 0, 0);
         Objek.kakikiri(gl);
         gl.glPopMatrix();
 
