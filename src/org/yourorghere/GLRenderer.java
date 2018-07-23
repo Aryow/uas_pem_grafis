@@ -183,6 +183,18 @@ public class GLRenderer implements GLEventListener {
         Objek.kakikiri(gl);
         gl.glPopMatrix();
 
+        tangankananAngle += direction1;
+        if (tangankananAngle > 50) {
+            direction1 = -direction1;
+        } else if (tangankananAngle < -50) {
+            direction1 = -direction1;
+        }
+        tangankiriAngle -= direction2;
+        if (tangankiriAngle < -50) {
+            direction2 = -direction2;
+        } else if (tangankiriAngle > 50) {
+            direction2 = -direction2;
+        }
         
        
         gl.glFlush();
