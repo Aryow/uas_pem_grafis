@@ -195,8 +195,22 @@ public class GLRenderer implements GLEventListener {
         } else if (tangankiriAngle > 50) {
             direction2 = -direction2;
         }
-        
-       
+        if (kakiKanan) {
+            kakikananAngle -= direction3;
+            if (kakikananAngle < -50) {
+                direction3 = -direction3;
+            } else if (kakikananAngle > 10) {
+                direction3 = -direction3;
+            }
+        } 
+        if (kakiKiri) {
+            kakikiriAngle -= direction4;
+            if (kakikiriAngle < -50) {
+                direction4 = -direction4;
+            } else if (kakikiriAngle > 10) {
+                direction4 = -direction4;
+            }
+        }
         gl.glFlush();
 
     }
@@ -207,7 +221,14 @@ public class GLRenderer implements GLEventListener {
     void Key_Pressed(int keyCode) {
         
         switch (keyCode) {
-        
+        //panah ATAS
+            case 38:
+                vectorMovement(depanBelakang, 2f, 1f);
+                break;
+        //panah BAWAH
+            case 40:
+                vectorMovement(depanBelakang, 2f, -1f);
+                break;
         //huruf D
             case 68:
                 vectorMovement(samping, 2f, -1f);
@@ -224,8 +245,34 @@ public class GLRenderer implements GLEventListener {
             case 87:
                 vectorMovement(vertikal, 2f, -1f);
                 break;
-
-        
+        //huruf Z
+            case 90:
+                if (kakiKanan) {
+                    kakiKanan = false;
+                } else {
+                    kakiKanan = true;
+                }   break;      
+        //huruf C
+            case 67:
+                if (kakiKiri) {
+                    kakiKiri = false;
+                } else {
+                    kakiKiri = true;
+                }   break;
+        //panah KIRI
+            case 37:
+                angle_depanBelakang -= 15f;
+                samping.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
+                vertikal.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
+                angle_depanBelakang2 = angle_depanBelakang;
+                break;
+        //panah KANAN    
+            case 39:
+                angle_depanBelakang += 15f;
+                samping.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
+                vertikal.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
+                angle_depanBelakang2 = angle_depanBelakang;
+                break;
             default:
                 break;
         }
