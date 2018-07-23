@@ -56,7 +56,7 @@ public class GLRenderer implements GLEventListener {
     float angle_samping2 = 0f;
     float angle_vertikal = 0f;
     float angle_vertikal2 = 0f;
-    float danboAngle = 90f;
+    float androAngle = 90f;
     float kakikananAngle = 0f;
     float kakikiriAngle = 0f;
     float tangankananAngle = 1;
@@ -154,7 +154,7 @@ public class GLRenderer implements GLEventListener {
                 Lx, Ly, Lz,
                 vertikal.x, vertikal.y, vertikal.z);
 
-        gl.glRotatef(danboAngle, 1.0f, 0.0f, 0.0f);
+        gl.glRotatef(androAngle, 1.0f, 0.0f, 0.0f);
         gl.glTranslatef(-2.5f, -16.0f, -7.0f);
         gl.glColor3f(1, 0, 0);
         Objek.kepala(gl);
@@ -212,37 +212,7 @@ public class GLRenderer implements GLEventListener {
             case 87:
                 vectorMovement(vertikal, 2f, -1f);
                 break;
-        
-        //Huruf J
-            case 74:
-                angle_vertikal += 7f;
-                samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-                depanBelakang.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-                cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
-                angle_vertikal2 = angle_vertikal;
-                break;
-        //huruf L
-            case 76:
-                angle_vertikal -= 7f;
-                samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-                depanBelakang.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-                cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
-                angle_vertikal2 = angle_vertikal;
-                break;
-        //huruf K
-            case 75:
-                angle_samping -= 7f;
-                depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
-                cameraRotation(samping, angle_samping - angle_samping2);
-                angle_samping2 = angle_samping;
-                break;
-        //Huruf I
-            case 73:
-                angle_samping += 7f;
-                depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
-                cameraRotation(samping, angle_samping - angle_samping2);
-                angle_samping2 = angle_samping;
-                break;
+
         
             default:
                 break;
